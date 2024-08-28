@@ -16,7 +16,9 @@ vi.mock('react-router-dom', async () => {
 it('"뒤로 이동" 버튼 클릭시 뒤로 이동하는 navigate(-1) 함수가 호출된다', async () => {
   const { user } = await render(<ErrorPage />);
 
-  await user.click(screen.getByRole('button', { name: '뒤로 이동' }));
+  const button = await screen.getByRole('button', { name: '뒤로 이동' });
 
-  expect(navigateFn).toHaveBeenCalledWith(-1);
+  await user.click(button);
+
+  expect(navigateFn).toHaveBeenNthCalledWith(1, -1);
 });
