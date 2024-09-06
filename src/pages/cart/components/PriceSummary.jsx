@@ -8,6 +8,7 @@ import { useCartStore } from '@/store/cart';
 import { pick } from '@/utils/common';
 import { formatPrice, formatNumber } from '@/utils/formatter';
 
+// zustand 사용법 => https://zustand.docs.pmnd.rs/getting-started/introduction
 const PriceSummary = () => {
   const navigate = useNavigate();
 

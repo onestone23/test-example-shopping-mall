@@ -1,6 +1,8 @@
 const { create: actualCreate } = await vi.importActual('zustand');
 import { act } from '@testing-library/react';
 
+// __mocks__ 하위에 위치한 파일 -> vitest나 jest에서 특정 모듈을 자동 모킹
+
 // 앱에 선언된 모든 스토어에 대해 재설정 함수를 저장
 const storeResetFns = new Set();
 
