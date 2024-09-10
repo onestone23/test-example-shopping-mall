@@ -9,6 +9,7 @@ import {
   mockUseCartStore,
 } from '@/utils/test/mockZustandStore';
 import render from '@/utils/test/render';
+import ProductInfoArea from '@/pages/productDetail/components/ProductInfoArea';
 
 const PRODUCT_PAGE_LIMIT = 5;
 
@@ -27,7 +28,30 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
-it('로딩이 완료된 경우 상품 리스트가 제대로 모두 노출된다', async () => {});
+it('로딩이 완료된 경우 상품 리스트가 제대로 모두 노출된다', async () => {
+  await render(<ProductList limit={PRODUCT_PAGE_LIMIT} />);
+
+  const productCards = screen.getAllByTestId('product-card');
+
+  expect(productCards).toHaveLength(PRODUCT_PAGE_LIMIT);
+
+  productCards.forEach((el, index) => {
+    const productCard = within(el);
+    const product = data.products[index];
+
+    expect(productCard.getByText(product.title)).toBeInTheDocument();
+    expect(productCard.getByText(product.category.name)).toBeInTheDocument();
+    expect(
+      productCard.getByText(formatPrice(product.price)),
+    ).toBeInTheDocument();
+    expect(
+      productCard.getByRole('button', { name: '장바구니' }),
+    ).toBeInTheDocument();
+    expect(
+      productCard.getByRole('button', { name: '구매' }),
+    ).toBeInTheDocument();
+  });
+});
 
 it('보여줄 상품 리스트가 더 있는 경우 show more 버튼이 노출되며, 버튼을 누르면 상품 리스트를 더 가져온다.', async () => {});
 
